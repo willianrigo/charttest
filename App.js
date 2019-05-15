@@ -10,9 +10,6 @@ export default class App extends React.Component {
       <View>
       <View><Text>Hello world</Text></View>
       <View>
-        <AreaChartExample/>
-      </View>
-      <View>
         <LayeredChartsExample/>
       </View>
       </View>

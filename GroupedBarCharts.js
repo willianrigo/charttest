@@ -1,12 +1,15 @@
 import React from 'react'
 import {View} from 'react-native'
 import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
+import { Line } from 'react-native-svg'
+
+import { Dimensions } from "react-native";
 
 class GroupedBarCharts extends React.PureComponent {
 
     render() {
 
-        const labels = [ 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+        // const labels = [ 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
             // .map((value) => ({ value }))
         const dataArray = [ 14, 1, 1000, 95, 94, 24, 8, 85, 91, 35, 53, 53 ]
         // const data1 = dataArray
@@ -27,6 +30,14 @@ class GroupedBarCharts extends React.PureComponent {
             { label: 'Nov', value: 689 },
             { label: 'Dec', value: 643 }
           ]
+
+        const labels = data1.map((obj) => {
+            return obj.label
+        })
+
+        console.log(labels)
+
+          
 
           const data2 = [
             { label: 'Jan', value: 500 },
@@ -55,21 +66,14 @@ class GroupedBarCharts extends React.PureComponent {
             },
         ]
 
-        console.log(data1.forEach((value) => {
-            // console.log("Object value", Object.keys(value)[0])
-            // console.log("Index: ", dataArray.indexOf(value.value))
-            // console.log("Value: ", labels[dataArray.indexOf(value.value)])
-    
-        }));
-
 
         return (
             
-            <View>
+            <View styles={{width: Dimensions.get('window').width}}>
                 <BarChart
-                    style={ { height: 200 } }
+                    style={ { height: 400, width: "100%" } }
                     data={ barData }
-                    spacingInner={0.45}
+                    spacingInner={0.25}
                     yAccessor={({ item }) => item.value}
                     svg={{
                         fill: 'green',
@@ -81,9 +85,10 @@ class GroupedBarCharts extends React.PureComponent {
                 </BarChart>
 
                 <XAxis
-                    style={{ marginHorizontal: -10 }}
+                    style={{ height: 15}}
+
                     data={ data1 } 
-                    svg={{ fontSize: 10, fill: 'black' }}
+                    svg={{ fontSize: 15, fill: 'black' }}
                     formatLabel={(index, value) => labels[index-1]}
                 />
             </View>
