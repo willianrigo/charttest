@@ -1,5 +1,5 @@
 import React from 'react'
-import {View} from 'react-native'
+import {View, ScrollView, Text} from 'react-native'
 import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
 import { Line } from 'react-native-svg'
 
@@ -72,10 +72,11 @@ class GroupedBarCharts extends React.PureComponent {
 
 
         return (
-            
-            <View styles={{width: Dimensions.get('window').width, position: "relative"}}>
+            <View>
+            <ScrollView horizontal={true} style={ { height: 500 } }>
+                <View styles={{height: "100%", width: "100%"}}>
                 <BarChart
-                    style={ { height: constants.chartHeight, width: "100%", position: "relative" } }
+                    style={ { height: "90%", width: 500, position: "relative" } }
                     data={ barData }
                     spacingInner={0.25}
                     yAccessor={({ item }) => item.value}
@@ -104,13 +105,17 @@ class GroupedBarCharts extends React.PureComponent {
                     }}
                 /> 
 
+                <Labels/>
                 <XAxis
-                    style={{ height: 10}}
+                    style={{ height: "10%"}}
 
                     data={ data1 } 
                     svg={{ fontSize: 15, fill: 'black' }}
                     formatLabel={(index, value) => labels[index-1]}
                 />
+                <Text style={{height: "10%"}}>asidhasuhdashud</Text>
+                </View>
+            </ScrollView>
             </View>
         )
     }
