@@ -5,6 +5,12 @@ import { Line } from 'react-native-svg'
 
 import { Dimensions } from "react-native";
 
+const constants = {
+    chartHeight: Dimensions.get('window').height / 2,
+    yMax: 1500,
+    lineValue: 750
+}
+
 class GroupedBarCharts extends React.PureComponent {
 
     render() {
@@ -37,8 +43,6 @@ class GroupedBarCharts extends React.PureComponent {
 
         console.log(labels)
 
-          
-
           const data2 = [
             { label: 'Jan', value: 500 },
             { label: 'Feb', value: 312 },
@@ -69,23 +73,39 @@ class GroupedBarCharts extends React.PureComponent {
 
         return (
             
-            <View styles={{width: Dimensions.get('window').width}}>
+            <View styles={{width: Dimensions.get('window').width, position: "relative"}}>
                 <BarChart
-                    style={ { height: 400, width: "100%" } }
+                    style={ { height: constants.chartHeight, width: "100%", position: "relative" } }
                     data={ barData }
                     spacingInner={0.25}
                     yAccessor={({ item }) => item.value}
                     svg={{
                         fill: 'green',
                     }}
-                    contentInset={ { top: 30, bottom: 30, left: 10, right: 10 } }
+                    yMax={constants.yMax}
+                    // contentInset={ { top: 30, bottom: 30, left: 10, right: 10 } }
                     { ...this.props }
                 >
-                    <Grid/>
+                
+                <Grid/>
+
                 </BarChart>
+                
+                
+                <View
+                    style={{
+                        borderBottomColor: 'red',
+                        borderBottomWidth: 1,
+                        position: "absolute",
+                        top: constants.chartHeight - ((constants.lineValue) / (constants.yMax) * constants.chartHeight) - 1,
+                        left: 0,
+                        width: "100%",
+                        zIndex: 99
+                    }}
+                /> 
 
                 <XAxis
-                    style={{ height: 15}}
+                    style={{ height: 10}}
 
                     data={ data1 } 
                     svg={{ fontSize: 15, fill: 'black' }}
