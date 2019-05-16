@@ -1,7 +1,6 @@
 import React from 'react'
 import {View, ScrollView, Text} from 'react-native'
-import { BarChart, Grid, XAxis } from 'react-native-svg-charts'
-import { Line } from 'react-native-svg'
+import { BarChart, Grid, XAxis, LineChart } from 'react-native-svg-charts'
 
 import { Dimensions } from "react-native";
 
@@ -11,15 +10,15 @@ const constants = {
     lineValue: 750
 }
 
-class GroupedBarCharts extends React.PureComponent {
+class GroupedBarWithLineCharts extends React.PureComponent {
 
     render() {
 
         // const labels = [ 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
             // .map((value) => ({ value }))
-        const dataArray = [ 14, 1, 1000, 95, 94, 24, 8, 85, 91, 35, 53, 53 ]
-        // const data1 = dataArray
-        //     .map((value) => ({ value }))
+        const dataArray = [ 14, 1, 250, 95, 94, 24, 8, 85, 91, 35, 53, 53 ]
+        const dataObject = dataArray
+            .map((value) => ({ value }))
         // const data2 = [ 24, 28, 93, 77, 42, 62, 52, 87, 21, 53, 78, 62 ]
         //     .map((value) => ({ value }))
         const data1 = [
@@ -38,20 +37,6 @@ class GroupedBarCharts extends React.PureComponent {
           ]
 
         const CUT_OFF = 50
-        const Labels = ({  x, y, bandwidth, data }) => (
-            dataArray.map((value, index) => (
-                <Text
-                    key={ index }
-                    x={ value > CUT_OFF ? x(0) + 10 : x(value) + 10 }
-                    y={ y(index) + (bandwidth / 2) }
-                    fontSize={ 14 }
-                    fill={ value > CUT_OFF ? 'white' : 'black' }
-                    alignmentBaseline={ 'middle' }
-                >
-                    {value}
-                </Text>
-            ))
-        )
 
         const labels = data1.map((obj) => {
             return obj.label
@@ -93,6 +78,7 @@ class GroupedBarCharts extends React.PureComponent {
                 <View styles={{height: "100%", width: "100%"}}>
                 <BarChart
                     style={ { height: "90%", width: 500, position: "relative" } }
+                    // data={ barData }
                     data={ barData }
                     spacingInner={0.25}
                     yAccessor={({ item }) => item.value}
@@ -106,9 +92,16 @@ class GroupedBarCharts extends React.PureComponent {
                 
                 
                 <Grid/>
-                {/* <Labels/> */}
 
                 </BarChart>
+
+                <LineChart
+                    style={ { height: "90%", width: 500, position: "absolute"} }
+                    data={ dataArray }
+                    svg={{ stroke: 'rgb(0, 0, 255)' }}
+                    contentInset={ { top: 20, bottom: 20 } }
+                >
+                </LineChart>
                 
                 <View
                     style={{
@@ -121,14 +114,15 @@ class GroupedBarCharts extends React.PureComponent {
                         zIndex: 99
                     }}
                 /> 
+                
 
                 <XAxis
                     style={{ height: "10%"}}
-
                     data={ data1 } 
                     svg={{ fontSize: 15, fill: 'black' }}
                     formatLabel={(index, value) => labels[index-1]}
                 />
+
                 </View>
             </ScrollView>
             </View>
@@ -136,4 +130,4 @@ class GroupedBarCharts extends React.PureComponent {
     }
 }
 
-export default GroupedBarCharts;
+export default GroupedBarWithLineCharts;
