@@ -16,7 +16,7 @@ class GroupedBarWithLineCharts extends React.PureComponent {
 
         // const labels = [ 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
             // .map((value) => ({ value }))
-        const dataArray = [ 14, 1, 250, 95, 94, 24, 8, 85, 91, 35, 53, 53 ]
+        const dataArray = [ 46, 38, 25, 47, 73, 50, 40 ]
         const dataObject = dataArray
             .map((value) => ({ value }))
         // const data2 = [ 24, 28, 93, 77, 42, 62, 52, 87, 21, 53, 78, 62 ]
@@ -96,10 +96,11 @@ class GroupedBarWithLineCharts extends React.PureComponent {
                 </BarChart>
 
                 <LineChart
-                    style={ { height: "90%", width: 500, position: "absolute"} }
+                    style={ { height: "90%", width: 200, position: "absolute"} }
                     data={ dataArray }
                     svg={{ stroke: 'rgb(0, 0, 255)' }}
                     contentInset={ { top: 20, bottom: 20 } }
+                    yMax={200}
                 >
                 </LineChart>
                 
