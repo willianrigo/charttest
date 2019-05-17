@@ -1,6 +1,8 @@
 import React from 'react'
-import {View, ScrollView, Text} from 'react-native'
+import {View, ScrollView} from 'react-native'
 import { BarChart, Grid, XAxis, LineChart } from 'react-native-svg-charts'
+import { Circle, G, Line, Rect, Text } from 'react-native-svg'
+import * as shape from 'd3-shape'
 
 import { Dimensions } from "react-native";
 
@@ -9,6 +11,57 @@ const constants = {
     yMax: 1500,
     lineValue: 750
 }
+
+
+const Tooltip = ({ x, y, dataPoint, yPos}) => {
+
+    console.log("Call", yPos)
+    return (
+    <G
+        x={ x(5) - (75 / 2) }
+        key={ 'tooltip' }
+        onPress={ () => console.log('tooltip clicked') }
+    >
+        <G y={yPos}>
+            <Rect
+                height={ 40 }
+                width={ 75 }
+                stroke={ 'grey' }
+                fill={ 'white' }
+                ry={ 0 }
+                rx={ 10 }
+            />
+            <Text
+                x={ 75 / 2 }
+                dy={ 20 }
+                alignmentBaseline={ 'middle' }
+                textAnchor={ 'middle' }
+                stroke={ 'rgb(134, 65, 244)' }
+            >
+                { `${dataPoint}ºC` }
+            </Text>
+        </G>
+        <G x={ 75 / 2 }>
+            {/* <Line
+                y1={ 50 + 40 }
+                y2={ y(data[ 5 ]) }
+                stroke={ 'grey' }
+                strokeWidth={ 2 }
+            /> */}
+            {/* <Circle
+                cy={ y(data[ 5 ]) }
+                r={ 6 }
+                stroke={ 'rgb(134, 65, 244)' }
+                strokeWidth={ 2 }
+                fill={ 'white' }
+            /> */}
+        </G>
+    </G>
+    )
+}
+
+const data = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ]
+
 
 class GroupedBarWithLineCharts extends React.PureComponent {
 
@@ -97,11 +150,17 @@ class GroupedBarWithLineCharts extends React.PureComponent {
 
                 <LineChart
                     style={ { height: "90%", width: 200, position: "absolute"} }
-                    data={ dataArray }
+                    data={ data }
                     svg={{ stroke: 'rgb(0, 0, 255)' }}
                     contentInset={ { top: 20, bottom: 20 } }
                     yMax={200}
                 >
+
+                {data.map(function(dataPoint, yPos = 20){
+                    yPos = yPos + 100;
+                    return <Tooltip yPos={yPos}/>;
+                })}
+
                 </LineChart>
                 
                 <View
