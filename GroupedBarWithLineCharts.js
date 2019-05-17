@@ -133,7 +133,7 @@ class GroupedBarWithLineCharts extends React.PureComponent {
                     style={ { height: "90%", width: 500, position: "relative" } }
                     // data={ barData }
                     data={ barData }
-                    spacingInner={0.25}
+                    spacingInner={0.25}lç
                     yAccessor={({ item }) => item.value}
                     svg={{
                         fill: 'green',
@@ -157,7 +157,7 @@ class GroupedBarWithLineCharts extends React.PureComponent {
                 >
 
                 {data.map(function(dataPoint, yPos = 20){
-                    yPos = yPos + 100;
+                    yPos = yPos + 1000
                     return <Tooltip yPos={yPos}/>;
                 })}
 
