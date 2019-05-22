@@ -8,8 +8,9 @@ import { Dimensions } from "react-native";
 
 const constants = {
     chartHeight: Dimensions.get('window').height / 2,
-    yMax: 1500,
-    lineValue: 750
+    yMax: 150,
+    xMax: 8,
+    lineValue: 50
 }
 
 
@@ -114,13 +115,15 @@ class GroupedBarWithLineCharts extends React.PureComponent {
 
         const barData = [
             {
-                data: data1,
+                // data: data1,
+                data: dataObject,
                 svg: {
                     fill: 'rgb(134, 65, 244)',
                 },
             },
             {
-                data: data2,
+                // data: data2,
+                data: dataObject
             },
         ]
 
@@ -130,15 +133,16 @@ class GroupedBarWithLineCharts extends React.PureComponent {
             <ScrollView horizontal={true} style={ { height: 400 } }>
                 <View styles={{height: "100%", width: "100%"}}>
                 <BarChart
-                    style={ { height: "90%", width: 500, position: "relative" } }
+                    style={ { height: "90%", width: 300, position: "relative" } }
                     // data={ barData }
-                    data={ barData }
-                    spacingInner={0.25}lç
+                    data={ dataObject }
+                    spacingInner={0.25}
                     yAccessor={({ item }) => item.value}
                     svg={{
                         fill: 'green',
                     }}
                     yMax={constants.yMax}
+                    xMax={constants.xMax}
                     // contentInset={ { top: 30, bottom: 30, left: 10, right: 10 } }
                     { ...this.props }
                 >
@@ -149,20 +153,27 @@ class GroupedBarWithLineCharts extends React.PureComponent {
                 </BarChart>
 
                 <LineChart
-                    style={ { height: "90%", width: 200, position: "absolute"} }
-                    data={ data }
+                    style={ { height: "90%", width: 300, position: "absolute"} }
+                    data={ dataArray }
+                    animate={true}
                     svg={{ stroke: 'rgb(0, 0, 255)' }}
                     contentInset={ { top: 20, bottom: 20 } }
-                    yMax={200}
+                    yMax={constants.yMax}
+                    xMax={constants.xMax}
                 >
 
-                {data.map(function(dataPoint, yPos = 20){
-                    yPos = yPos + 1000
-                    return <Tooltip yPos={yPos}/>;
+                {data.map((dataPoint,index) => {
+                    console.log("index: ", index)
+
+                    const yPos = constants.chartHeight - ((dataPoint) / (constants.yMax) * constants.chartHeight) - 1
+
+                    return <Tooltip key={index} yPos={yPos} dataPoint={dataPoint}/>;
                 })}
 
                 </LineChart>
                 
+
+                {/* line */}
                 <View
                     style={{
                         borderBottomColor: 'red',
